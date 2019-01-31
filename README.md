@@ -276,3 +276,8 @@ make -j4
 sudo make install
 ````
 restart 
+
+
+
+#####optirun 
+tham khao https://github.com/Bumblebee-Project/Bumblebee/issues/971  
