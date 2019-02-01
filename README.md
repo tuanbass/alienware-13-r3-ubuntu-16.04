@@ -282,3 +282,59 @@ restart
 #####optirun 
 tham khao https://github.com/Bumblebee-Project/Bumblebee/issues/971  
 vblank_mode=0 optirun xxx to avoid fps limitation 
+
+You can install Bumblebee to Linux Mint 19 as following
+
+1. Installation of required packages
+
+sudo add-apt-repository ppa:graphics-drivers/ppa -y
+sudo apt update
+sudo apt install bumblebee nvidia-390 primus  primus-libs-ia32 linux-headers-$(uname -r) -y
+2. Post-installation configuration
+
+Change following lines from
+
+LibraryPath=/usr/lib/nvidia-current:/usr/lib32/nvidia-current
+XorgModulePath=/usr/lib/nvidia-current/xorg,/usr/lib/xorg/modules
+to
+
+LibraryPath=/usr/lib/x86_64-linux-gnu:/usr/lib/i386-linux-gnu
+XorgModulePath=/usr/lib/x86_64-linux-gnu/nvidia/xorg,/usr/lib/xorg/modules,/usr/lib/xorg/modules/input
+in /etc/bumblebee/bumblebee.conf file.
+
+Add following line to /etc/environment file.
+
+__GLVND_DISALLOW_PATCHING=1
+
+Add following lines to /etc/modprobe.d/blacklist-nvidia.conf file.
+
+blacklist nouveau
+blacklist nvidia
+blacklist nvidia-drm
+blacklist nvidia-modeset
+alias nouveau off
+alias nvidia-drm off
+alias nvidia-modeset off
+3. Disable gpumanager
+
+You can disable gpumanager with following commands.
+
+echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX nogpumanager"' | sudo tee /etc/default/grub.d/nogpumanager.cfg
+sudo update-grub
+
+3a. Add acpi parameter for some BIOS types with following commands.
+
+echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX acpi_osi=! acpi_osi=\"Windows 2009\""' | sudo tee /etc/default/grub.d/nvidia-acpi.cfg
+sudo update-grub
+
+4. Disable unnecessary services
+
+sudo systemctl disable nvidia-fallback.service
+sudo systemctl disable nvidia-persistenced.service
+
+5. Reboot
+
+Tip: You can use optirun -b primus instead of primusrun.
+
+
+
