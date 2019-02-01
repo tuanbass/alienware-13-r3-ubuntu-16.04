@@ -281,3 +281,4 @@ restart
 
 #####optirun 
 tham khao https://github.com/Bumblebee-Project/Bumblebee/issues/971  
+vblank_mode=0 optirun xxx to avoid fps limitation 
