@@ -280,6 +280,8 @@ restart
 
 
 ##### optirun 
+optirun -b primus -vv env DISPLAY=:8 /opt/VirtualGL/bin/glxspheres64 
+
 tham khao https://github.com/Bumblebee-Project/Bumblebee/issues/971  
 vblank_mode=0 optirun xxx to avoid fps limitation 
 
